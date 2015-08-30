@@ -11,6 +11,7 @@
 # Recent-changes:  2015-8-30
 
 ####################################### Part1 : coding    ##############################################################
+
 fp = open("/home/zhmi/Documents/dna2.fasta")
 original_list = list()
 sequlengthlist = list()
@@ -22,14 +23,30 @@ except:
 finally:
     fp.close()
 
+'''
+[the first vision]
 total_original_str = ''
 
 for i in xrange(len(original_list)):
     original_list[i] = original_list[i].strip()
     if original_list[i][0] == '>':
        original_list[i] = '>'
-    total_original_str =  total_original_str + original_list[i];
+    total_original_str =  total_original_str + original_list[i]
 
+sequence_list = total_original_str.split('>')
+sequence_list = filter(lambda x:x!='',sequence_list)
+
+'''
+
+#[the second vision]
+total_original_str = ''
+def combine_sequence(line):
+    global total_original_str
+    line = line.strip()
+    if line[0]=='>':
+        line = '>'
+    total_original_str = total_original_str + line
+map(combine_sequence,original_list)
 sequence_list = total_original_str.split('>')
 sequence_list = filter(lambda x:x!='',sequence_list)
 
@@ -44,9 +61,9 @@ print length_sequence_list
 #sepratelist = filter(lambda x:x[-3:]=='TAG' or x[-3:]=='TAA'or x[-3:]=='TGA',sepratelist)
 #three_dna_sequence_list = []
 
-def seperate_three_sequence(line):
+def seperate_three_sequence(line,read_frame):
     templist = []
-    templine = line[1:]
+    templine = line[3-read_frame:]
     tempstr = ''
     for i in xrange((len(line)-1)/3):
         tempstr = templine[0:3]
@@ -54,7 +71,14 @@ def seperate_three_sequence(line):
         templine = templine[3:]
     return templist
 
-three_dna_sequence_list = map(seperate_three_sequence,sequence_list)
+frame_input = input("Please input the reading frame of sequence:")
+'''
+#[the first  vision]
+frame_list = [frame_input for i in range(len(sequence_list))]
+three_dna_sequence_list = map(seperate_three_sequence,sequence_list,frame_list)
+'''
+#[the second vision]
+three_dna_sequence_list = map(lambda element_in_list: seperate_three_sequence(element_in_list, frame_input), sequence_list)
 
 '''
 print 'length of three_dna_sequence_list:',len(three_dna_sequence_list)
@@ -65,9 +89,24 @@ for i in xrange(3):
     print '\n'
 '''
 
+def end_code_position_find(end_code_list,sequence):
+    try:
+        end_code_list.append(sequence.index('TAG'))
+    except:
+        pass
+    try:
+        end_code_list.append(sequence.index('TAA'))
+    except:
+        pass
+    try:
+        end_code_list.append(sequence.index('TGA'))
+    except:
+        pass
+    return end_code_list
+
+
 def ofr_sequence_find(line):
     templist = []
-    line = line[1:]
     while(len(line)):
         try:
             begin_code_pos = line.index('ATG')
@@ -77,6 +116,8 @@ def ofr_sequence_find(line):
             break
         else:
             line = line[begin_code_pos:]
+            '''
+            [the first vision]
             end_code_pos_list = []
             try:
                 end_code_pos_list.append(line.index('TAG'))
@@ -90,6 +131,10 @@ def ofr_sequence_find(line):
                 end_code_pos_list.append(line.index('TGA'))
             except:
                 pass
+            '''
+            #[the second vision]
+            end_code_pos_list = []
+            end_code_position_find(end_code_pos_list,line)
             if len(end_code_pos_list)==0 :
                 break
             else:
@@ -115,18 +160,18 @@ a = [[1,3],[2,4],[3,5],["abc","def"]]
 >>> a1[1,3,2,4,3,5,"abc","def"]
 '''
 
-#[flat vision]
+#[flatten action]
 ofr_sequence_list = [y for x in ofr_sequence_list for y in x]
 
 #[text codes]
 print 'after flatten action,length of ofr_sequence_list:',len(ofr_sequence_list)
 
-ofr_sequence_length_list = map(lambda x:len(x),ofr_sequence_list)
+ofr_sequence_length_list = map(len,ofr_sequence_list)
 
 print 'after get length action,length of ofr_sequence_ength_list',len(ofr_sequence_length_list)
 
-max_ofr_sequence_length = max(ofr_sequence_length_list)
-print "max length of max_ofr_sequence_length:",3*max_ofr_sequence_length
+max_ofr_sequence_length = 3*max(ofr_sequence_length_list)
+print "max length of max_ofr_sequence_length:",max_ofr_sequence_length
 
 
 
