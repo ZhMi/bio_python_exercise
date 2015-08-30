@@ -52,10 +52,6 @@ def seperate_three_sequence(line):
         tempstr = templine[0:3]
         templist.append(tempstr)
         templine = templine[3:]
-    '''
-    if ((len(line)-1)%3)!=0:
-        templist.append(templine[len(templine)-3*k:])
-    '''
     return templist
 
 three_dna_sequence_list = map(seperate_three_sequence,sequence_list)
@@ -111,12 +107,15 @@ print 'befor filter action,length of ofr_sequence_list:',len(ofr_sequence_list)
 ofr_sequence_list = filter(lambda x:len(x)!=0,ofr_sequence_list)
 #[text codes]
 print 'after filter action,length of ofr_sequence_list:',len(ofr_sequence_list)
+
 '''
 [example about flatten]
 a = [[1,3],[2,4],[3,5],["abc","def"]]
 >>> a1 = [y for x in a for y in x]
 >>> a1[1,3,2,4,3,5,"abc","def"]
 '''
+
+#[flat vision]
 ofr_sequence_list = [y for x in ofr_sequence_list for y in x]
 
 #[text codes]
@@ -125,10 +124,13 @@ print 'after flatten action,length of ofr_sequence_list:',len(ofr_sequence_list)
 ofr_sequence_length_list = map(lambda x:len(x),ofr_sequence_list)
 
 print 'after get length action,length of ofr_sequence_ength_list',len(ofr_sequence_length_list)
-'''
-for i in ofr_sequence_list:
-    print i
-'''
+
+max_ofr_sequence_length = max(ofr_sequence_length_list)
+print "max length of max_ofr_sequence_length:",3*max_ofr_sequence_length
+
+
+
+
 
 
 
