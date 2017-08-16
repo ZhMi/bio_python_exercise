@@ -16,7 +16,7 @@
 #                  This program is written to solve the question about"What is the length of the longest ORF appearing
 #                  in reading frame 1 or frame 2 or frame 3 of any of the sequences"
 # Author:          ZhMi
-# E-mail:          zmmingtiandege1314@126.com
+# E-mail:          
 # Create:          2015-8-29
 # Recent-changes:  2015-8-30
 
