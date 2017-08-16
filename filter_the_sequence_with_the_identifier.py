@@ -15,7 +15,7 @@
 #                  This program is written to solve the question about"What is the length of the longest forward ORF
 #                  that appears in the sequence with the identifier gi|142022655|gb|EQ086233.1|16?"
 # Author:          ZhMi
-# E-mail:          zmmingtiandege1314@126.com
+# E-mail:          
 # Create:          2015-9-3
 # Recent-changes:  2015-9-3
 
